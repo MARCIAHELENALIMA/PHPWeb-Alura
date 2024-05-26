@@ -2,12 +2,13 @@
 
 global $pdo;
 require "src/conexao-bd.php";
-require "src/model/Produto.php";
-require "src/repository/ProductRepository.php";
+    require "src/Modelo/Produto.php";
+    require "src/Repositorio/ProdutoRepositorio.php";
 
-$productRepository = new \repository\ProductRepository($pdo);
-$dadosCafe = $productRepository->opcoesCafe();
-$dadosAlmoco = $productRepository->opcoesAlmoco();
+    $produtosRepositorio = new ProdutoRepositorio($pdo);
+    $dadosCafe = $produtosRepositorio->opcoesCafe();
+    $dadosAlmoco = $produtosRepositorio->opcoesAlmoco();
+
 ?>
 
 <!doctype html>
@@ -22,56 +23,55 @@ $dadosAlmoco = $productRepository->opcoesAlmoco();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" href="img/icone-serenatto.png" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Serenatto - Cardápio</title>
 </head>
 <body>
-<main>
-    <section class="container-banner">
-        <div class="container-texto-banner">
-            <img src="img/logo-serenatto.png" class="logo" alt="logo-serenatto">
-        </div>
-    </section>
-    <h2>Cardápio Digital</h2>
-    <section class="container-cafe-manha">
-        <div class="container-cafe-manha-titulo">
-            <h3>Opções para o Café</h3>
-            <img class="ornaments" src="img/ornaments-coffee.png" alt="ornaments">
-        </div>
-        <div class="container-cafe-manha-produtos">
-            <?php foreach ($dadosCafe as $cafe): ?>
-                <div class="container-produto">
-                    <div class="container-foto">
-                        <img src="<?= $cafe->getImagemDiretorio() ?>" alt="cafe">
+    <main>
+        <section class="container-banner">
+            <div class="container-texto-banner">
+                <img src="img/logo-serenatto.png" class="logo" alt="logo-serenatto">
+            </div>
+        </section>
+        <h2>Cardápio Digital</h2>
+        <section class="container-cafe-manha">
+            <div class="container-cafe-manha-titulo">
+                <h3>Opções para o Café</h3>
+                <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
+            </div>
+            <div class="container-cafe-manha-produtos">
+                <?php foreach ($dadosCafe as $cafe):?>
+                    <div class="container-produto">
+                        <div class="container-foto">
+                            <img src="<?= $cafe->getImagemDiretorio() ?>" alt="cafe">
+                        </div>
+                        <p><?= $cafe->getNome()?></p>
+                        <p><?= $cafe->getDescricao()?></p>
+                        <p><?= $cafe->getPrecoFormatado() ?></p>
                     </div>
-                    <p><?= $cafe->getNome() ?></p>
-                    <p><?= $cafe->getDescricao() ?></p>
-                    <p><?= $cafe->getPrecoFormatado() ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <section class="container-almoco">
+            <div class="container-almoco-titulo">
+                <h3>Opções para o Almoço</h3>
+                <img class= "ornaments" src="img/ornaments-coffee.png" alt="ornaments">
+            </div>
+            <div class="container-almoco-produtos">
+                <?php foreach ($dadosAlmoco as $almoco):?>
+                    <div class="container-produto">
+                        <div class="container-foto">
+                            <img src="<?= $almoco->getImagemDiretorio()?>" alt="almoço">
+                        </div>
+                        <p><?= $almoco->getNome()?></p>
+                        <p><?= $almoco->getDescricao()?></p>
+                        <p><?= $almoco->getPrecoFormatado() ?></p>
+                    </div>
+                <?php endforeach; ?>
+            </div>
 
-    </section>
-    <section class="container-almoco">
-        <div class="container-almoco-titulo">
-            <h3>Opções para o Almoço</h3>
-            <img class="ornaments" src="img/ornaments-coffee.png" alt="ornaments">
-        </div>
-        <div class="container-almoco-produtos">
-            <?php foreach ($dadosAlmoco as $almoco): ?>
-                <div class="container-produto">
-                    <div class="container-foto">
-                        <img src="<?= $almoco->getImagemDiretorio() ?>" alt="almoço">
-                    </div>
-                    <p><?= $almoco->getNome() ?></p>
-                    <p><?= $almoco->getDescricao() ?></p>
-                    <p><?= $almoco->getPrecoFormatado() ?></p>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 </body>
 </html>
